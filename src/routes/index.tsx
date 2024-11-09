@@ -1,13 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Button, DatePicker, DatePickerRef, FloatingBubble, Form, Input, Picker, TextArea } from 'antd-mobile'
-import { AddOutline } from 'antd-mobile-icons'
+import { Button, Card, FloatingBubble, Form, Grid, List, Space } from 'antd-mobile'
+import { AddOutline, BankcardOutline } from 'antd-mobile-icons'
 import dayjs from 'dayjs'
-import { RefObject } from 'react'
 
+import { ExpenseForm } from '@/components/ExpenseForm'
 import { Popup } from '@/components/Popup'
-
-import { ruleRequired } from '@/helpers/antdUtils'
-import { DATE_TIME_FORMAT } from '@/helpers/formatter'
 
 import { useModal } from '@/hooks/useModal'
 
@@ -22,8 +19,89 @@ export function IndexPage() {
 	const { visible, show, hide } = useModal()
 
 	return (
-		<div>
-			<h1 className="text-3xl font-bold underline">Home Page</h1>
+		<div className="p-3">
+			<Grid columns={2} gap={12}>
+				<Grid.Item span={2}>
+					<Card icon={<></>} title="All Expense" extra={<></>} className="border border-gray-200">
+						<h1 className="text-center text-xl font-bold text-red-500">5,000</h1>
+					</Card>
+				</Grid.Item>
+
+				<Grid.Item span={1}>
+					<Card title="Transfer" className="border border-gray-200">
+						2,500
+					</Card>
+				</Grid.Item>
+				<Grid.Item span={1}>
+					<Card title="Credit Card" className="border border-gray-200">
+						2,500
+					</Card>
+				</Grid.Item>
+
+				<Grid.Item span={2} className="-mx-3">
+					<Space direction="vertical" block>
+						<h1 className="px-3 text-bold text-xl">Expense Transaction</h1>
+
+						<List header={dayjs().format('DD MMM YYYY')}>
+							<List.Item
+								title={
+									<Space align="center">
+										<BankcardOutline />
+
+										<span>Credit Card</span>
+									</Space>
+								}
+								extra={<span className="text-red-500 text-lg">-250 ฿</span>}
+								description={<span>Entertainment</span>}
+							>
+								Netflix
+							</List.Item>
+
+							<List.Item
+								title={
+									<Space align="center">
+										<BankcardOutline />
+
+										<span>Credit Card</span>
+									</Space>
+								}
+								extra={<span className="text-red-500 text-lg">-250 ฿</span>}
+								description={<span>Entertainment</span>}
+							>
+								Netflix
+							</List.Item>
+
+							<List.Item
+								title={
+									<Space align="center">
+										<BankcardOutline />
+
+										<span>Credit Card</span>
+									</Space>
+								}
+								extra={<span className="text-red-500 text-lg">-250 ฿</span>}
+								description={<span>Entertainment</span>}
+							>
+								Netflix
+							</List.Item>
+
+							<List.Item
+								title={
+									<Space align="center">
+										<BankcardOutline />
+
+										<span>Credit Card</span>
+									</Space>
+								}
+								extra={<span className="text-red-500 text-lg">-250 ฿</span>}
+								description={<span>Entertainment</span>}
+							>
+								Netflix
+							</List.Item>
+						</List>
+					</Space>
+				</Grid.Item>
+			</Grid>
 
 			<FloatingBubble
 				style={{
@@ -38,7 +116,7 @@ export function IndexPage() {
 				<AddOutline fontSize={24} />
 			</FloatingBubble>
 
-			<Popup visible={visible} title="Add new expense" closeOnMaskClick onClose={hide}>
+			<Popup visible={visible} title="Add new expense" closeOnMaskClick closeOnSwipe onClose={hide}>
 				<Form
 					layout="horizontal"
 					footer={
@@ -46,103 +124,11 @@ export function IndexPage() {
 							Add new expense
 						</Button>
 					}
+					onFinish={(values) => {
+						console.log('Values', values)
+					}}
 				>
-					<Form.Item name="name" label="Name" rules={[ruleRequired]}>
-						<Input placeholder="Netflix, Youtube Premium" />
-					</Form.Item>
-
-					<Form.Item
-						name="amount"
-						label="Amount"
-						rules={[
-							ruleRequired,
-							{
-								validator: (_, value) => {
-									if (value === 0) {
-										return Promise.reject(new Error('Amount cannot be 0'))
-									}
-
-									return Promise.resolve()
-								},
-							},
-						]}
-						getValueFromEvent={(value) => {
-							return value === '' ? '' : Number(value)
-						}}
-					>
-						<Input
-							type="number"
-							inputMode="numeric"
-							placeholder="300"
-							onBlur={(event) => {
-								console.log('current value', event.target.value)
-							}}
-						/>
-					</Form.Item>
-
-					<Form.Item
-						name="category"
-						label="Category"
-						rules={[ruleRequired]}
-						trigger="onConfirm"
-						onClick={(_, ref: RefObject<DatePickerRef>) => {
-							ref.current?.open()
-						}}
-					>
-						<Picker
-							columns={[
-								[
-									{
-										key: 'Hi',
-										label: 'Yo',
-										value: 1,
-									},
-									{
-										key: '2',
-										label: 'Yoya',
-										value: 2,
-									},
-								],
-							]}
-							closeOnMaskClick
-						>
-							{(value) => value[0]?.label}
-						</Picker>
-					</Form.Item>
-
-					<Form.Item name="paidAs" label="Paid as" rules={[ruleRequired]}>
-						<Input placeholder="Transfer, Credit card" />
-					</Form.Item>
-
-					<Form.Item
-						name="date"
-						label="Paid at"
-						rules={[ruleRequired]}
-						trigger="onConfirm"
-						onClick={(_, ref: RefObject<DatePickerRef>) => {
-							ref.current?.open()
-						}}
-					>
-						<DatePicker precision="minute" closeOnMaskClick>
-							{(value) =>
-								value == null ? (
-									<span
-										style={{
-											color: 'var(--adm-color-light)',
-										}}
-									>
-										Select date
-									</span>
-								) : (
-									dayjs(value).format(DATE_TIME_FORMAT)
-								)
-							}
-						</DatePicker>
-					</Form.Item>
-
-					<Form.Item name="note" label="Note">
-						<TextArea rows={4} />
-					</Form.Item>
+					<ExpenseForm />
 				</Form>
 			</Popup>
 		</div>
