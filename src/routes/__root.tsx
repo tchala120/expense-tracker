@@ -24,9 +24,9 @@ export function RootLayout() {
 				<SafeArea position="top" />
 
 				<div
+					className="border border-[var(--adm-color-border)] dark:border-gray-200"
 					style={{
 						flex: 0,
-						borderBottom: 'solid 1px var(--adm-color-border)',
 					}}
 				>
 					<NavBar
