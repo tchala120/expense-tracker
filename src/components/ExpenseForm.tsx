@@ -57,7 +57,7 @@ export const ExpenseForm = () => {
 			</Form.Item>
 
 			<Form.Item
-				name="paidAs"
+				name="paymentMethod"
 				label="Paid as"
 				rules={[ruleRequired]}
 				trigger="onConfirm"
@@ -69,7 +69,7 @@ export const ExpenseForm = () => {
 			</Form.Item>
 
 			<Form.Item
-				name="date"
+				name="paidAt"
 				label="Paid at"
 				rules={[ruleRequired]}
 				trigger="onConfirm"
