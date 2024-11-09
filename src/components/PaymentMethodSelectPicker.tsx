@@ -1,19 +1,7 @@
 import { Picker, type PickerProps, type PickerRef } from 'antd-mobile'
-import type { PickerColumn } from 'antd-mobile/es/components/picker-view'
 import { forwardRef } from 'react'
 
-const listPaymentMethodOptions: PickerColumn = [
-	{
-		key: 'transfer',
-		label: 'Transfer',
-		value: 'transfer',
-	},
-	{
-		key: 'credit-card',
-		label: 'Credit Card',
-		value: 'credit-card',
-	},
-]
+import { listPaymentMethodOptions } from '@/constants/pickerOptions'
 
 export const PaymentMethodSelectPicker = forwardRef<PickerRef, Omit<PickerProps, 'columns'>>((props, ref) => {
 	return (
