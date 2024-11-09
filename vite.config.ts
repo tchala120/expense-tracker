@@ -23,7 +23,7 @@ export default defineConfig({
 				name: 'Expense Tracker',
 				short_name: 'EX Tracker',
 				description: 'The tracker for self manage of expense in everyday',
-				theme_color: '#ffffff',
+				theme_color: '#c9d6d9',
 			},
 
 			workbox: {
