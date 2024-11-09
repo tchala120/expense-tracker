@@ -43,7 +43,7 @@ export function RootLayout() {
 					<Outlet />
 				</div>
 
-				<TanStackRouterDevtools />
+				{import.meta.env.DEV ? <TanStackRouterDevtools /> : null}
 
 				<PWABadge />
 
